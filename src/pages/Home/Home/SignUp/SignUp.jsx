@@ -1,39 +1,63 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import './Login.css'
 
 
-const Login = () => {
-//   const { signIn } = useContext(AuthContext);
-
-  const handleLogin = (event) => {
+const SignUp = () => {
+//   const { createUser } = useContext(AuthContext);
+  const handleSignUp = (event) => {
     event.preventDefault();
     const form = event.target;
+    const name = form.name.value;
+    const photo = form.photo.value;
     const email = form.email.value;
     const password = form.password.value;
-    console.log(email, password);
-    // signIn(email, password)
+    console.log(name, email, password,photo);
+
+    // createUser(email, password)
     //   .then((result) => {
     //     const user = result.user;
     //     console.log(user);
     //   })
     //   .catch((error) => console.log(error));
   };
-
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row">
         <div className="w-1/2 mr-12">
-          <img className="rounded-lg"
-            src="https://img.freepik.com/free-vector/tablet-login-concept-illustration_114360-7963.jpg?w=826&t=st=1684625992~exp=1684626592~hmac=9e2465ba6bb86e3ffc74a2e161518fc7732bc0b23e8e1d62c6d67bdbe9149d92"
+          <img
+            className="rounded-lg"
+            src="https://img.freepik.com/free-vector/sign-up-concept-illustration_114360-7965.jpg?w=826&t=st=1684627759~exp=1684628359~hmac=e4b34eb57ea37b904653eac7965ed99eb0dcc74e857955e57405cb369d5e75aa"
             alt=""
           />
         </div>
 
         <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
           <div className="card-body">
-            <h1 className="text-3xl text-center font-bold">Login</h1>
-            <form onSubmit={handleLogin}>
+            <h1 className="text-3xl text-center font-bold">Sign Up</h1>
+            <form onSubmit={handleSignUp}>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Name</span>
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="name"
+                  className="input input-bordered"
+                />
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Photo Url</span>
+                </label>
+                <input
+                  type="text"
+                  name="photo"
+                  placeholder="photo Url"
+                  className="input input-bordered"
+                />
+              </div>
+
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Email</span>
@@ -45,9 +69,10 @@ const Login = () => {
                   className="input input-bordered"
                 />
               </div>
+
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Password</span>
+                  <span className="label-text">Confirm Password</span>
                 </label>
                 <input
                   type="text"
@@ -65,14 +90,14 @@ const Login = () => {
                 <input
                   className="btn btn-primary"
                   type="submit"
-                  value="Login"
+                  value="Sign Up"
                 />
               </div>
             </form>
             <p className="my-4 text-center">
-              New to Movies Toy{" "}
-              <Link className="text-blue-600 font-bold" to="/signup">
-                Sign Up
+              Already Have an Account?
+              <Link className="text-blue-600 font-bold" to="/login">
+                Login
               </Link>
             </p>
           </div>
@@ -82,4 +107,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;

@@ -68,12 +68,12 @@ const Navbar = () => {
           <a className="btn btn-ghost normal-case text-3xl">Movies Toy</a>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
-            {navItems}
-          </ul>
+          <ul className="menu menu-horizontal px-1">{navItems}</ul>
         </div>
         <div className="navbar-end">
-          <a className="btn">Get started</a>
+          <button className="btn my-btn">
+            Get started
+          </button>
         </div>
       </div>
     );
