@@ -1,9 +1,11 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../../../providers/AuthProvider";
 
 
 const SignUp = () => {
-//   const { createUser } = useContext(AuthContext);
+    const { createUser } = useContext(AuthContext);
+    const [error, setError] = useState("");
   const handleSignUp = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -13,12 +15,30 @@ const SignUp = () => {
     const password = form.password.value;
     console.log(name, email, password,photo);
 
-    // createUser(email, password)
-    //   .then((result) => {
-    //     const user = result.user;
-    //     console.log(user);
-    //   })
-    //   .catch((error) => console.log(error));
+      createUser(email, password)
+        .then((result) => {
+          const createdUser = result.user;
+          console.log(createdUser);
+          updateUserData(createUser, name, photo);
+        })
+        .catch((error) => {
+          console.log(error);
+          setError(error.message);
+        });
+      
+     const updateUserData = (user, name, photo) => {
+       user.updateProfile({
+         displayName: name,
+         photoURL: photo,
+       })
+         .then(() => {
+           console.log(user);
+         })
+         .catch((error) => {
+           setError(error.massage);
+         });
+     };
+    
   };
   return (
     <div className="hero min-h-screen bg-base-200">
@@ -88,7 +108,7 @@ const SignUp = () => {
               </div>
               <div className="form-control mt-6">
                 <input
-                  className="btn btn-primary"
+                  className="btn btn-primary my-btn"
                   type="submit"
                   value="Sign Up"
                 />
@@ -99,7 +119,8 @@ const SignUp = () => {
               <Link className="text-blue-600 font-bold" to="/login">
                 Login
               </Link>
-            </p>
+                      </p>
+                      <p className="text-red-500">{ error}</p>
           </div>
         </div>
       </div>

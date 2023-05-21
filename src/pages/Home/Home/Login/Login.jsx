@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import './Login.css'
+import { FaGoogle } from "react-icons/fa";
 
 
 const Login = () => {
@@ -24,7 +25,8 @@ const Login = () => {
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row">
         <div className="w-1/2 mr-12">
-          <img className="rounded-lg"
+          <img
+            className="rounded-lg"
             src="https://img.freepik.com/free-vector/tablet-login-concept-illustration_114360-7963.jpg?w=826&t=st=1684625992~exp=1684626592~hmac=9e2465ba6bb86e3ffc74a2e161518fc7732bc0b23e8e1d62c6d67bdbe9149d92"
             alt=""
           />
@@ -63,12 +65,26 @@ const Login = () => {
               </div>
               <div className="form-control mt-6">
                 <input
-                  className="btn btn-primary"
+                  className="btn btn-primary my-btn"
                   type="submit"
                   value="Login"
                 />
               </div>
             </form>
+            <p className="text-center">or</p>
+            <div className="text-center">
+              <button
+                // onClick={handleGoogleSignIn}
+                type="button"
+                class="btn my-btn"
+              >
+                <FaGoogle
+                  style={{ fontSize: "1.5rem" }}
+                  className="me-2"
+                ></FaGoogle>
+                Sign in with Google
+              </button>
+            </div>
             <p className="my-4 text-center">
               New to Movies Toy{" "}
               <Link className="text-blue-600 font-bold" to="/signup">
