@@ -1,25 +1,50 @@
-import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link,useLocation, useNavigate } from "react-router-dom";
 import './Login.css'
 import { FaGoogle } from "react-icons/fa";
+import { AuthContext } from "../../../../providers/AuthProvider";
 
 
 const Login = () => {
-//   const { signIn } = useContext(AuthContext);
+const { signIn, googlePopup, setUser} = useContext(AuthContext);
+const navigate = useNavigate();
+const location = useLocation();
+const [error, setError] = useState("");
+console.log("login page location", location);
+const from = location.state?.from?.pathname || "/";
 
-  const handleLogin = (event) => {
-    event.preventDefault();
-    const form = event.target;
-    const email = form.email.value;
-    const password = form.password.value;
-    console.log(email, password);
-    // signIn(email, password)
-    //   .then((result) => {
-    //     const user = result.user;
-    //     console.log(user);
-    //   })
-    //   .catch((error) => console.log(error));
-  };
+const handleLogin = (event) => {
+  event.preventDefault();
+  const form = event.target;
+  const email = form.email.value;
+  const password = form.password.value;
+  // console.log(email, password);
+
+  signIn(email, password)
+    .then((result) => {
+      const loggedUser = result.user;
+      console.log(loggedUser);
+      navigate(from, { replace: true });
+    })
+    .catch((error) => {
+      console.log(error);
+      setError(error.message);
+    });
+};
+
+const handleGoogleSignIn = () => {
+  googlePopup()
+    .then((result) => {
+      const loggedInUser = result.user;
+      console.log(loggedInUser);
+      setUser(loggedInUser);
+    })
+    .catch((error) => {
+      console.log("error", error.message);
+    });
+};
+
+  
 
   return (
     <div className="hero min-h-screen bg-base-200">
@@ -74,7 +99,7 @@ const Login = () => {
             <p className="text-center">or</p>
             <div className="text-center">
               <button
-                // onClick={handleGoogleSignIn}
+                onClick={handleGoogleSignIn}
                 type="button"
                 class="btn my-btn"
               >
@@ -91,6 +116,7 @@ const Login = () => {
                 Sign Up
               </Link>
             </p>
+            <p className="text-red-500">{error}</p>
           </div>
         </div>
       </div>
