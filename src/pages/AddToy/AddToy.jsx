@@ -20,7 +20,22 @@ const AddToy = () => {
         const toyData = {
             toyName,sellerName,sellerEmail,photoUrl,category,price,rating,quantity,description
         }
-        console.log(toyData);
+      console.log(toyData);
+      
+      fetch("http://localhost:5000/addToys", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(toyData),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          if (data.insertedId) {
+            alert("toy add successfully");
+          }
+        });
     }
 
     return (
@@ -93,7 +108,8 @@ const AddToy = () => {
                 <span className="label-text">Price</span>
               </label>
               <input
-                type="text"
+                type="number"
+                step="0.01"
                 name="price"
                 defaultValue=""
                 placeholder="price"
@@ -105,7 +121,8 @@ const AddToy = () => {
                 <span className="label-text">Rating</span>
               </label>
               <input
-                type="text"
+                type="number"
+                step="0.01"
                 name="rating"
                 defaultValue=""
                 placeholder="rating"
@@ -117,7 +134,7 @@ const AddToy = () => {
                 <span className="label-text">Available quantity</span>
               </label>
               <input
-                type="text"
+                type="number"
                 name="quantity"
                 defaultValue=""
                 placeholder="available quantity"
