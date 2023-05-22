@@ -1,11 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Category = () => {
+    const [category, setCategory] = useState([]);
     const [activeTab, setActiveTab] = useState("Marvel");
+
+    useEffect(() => {
+      fetch(`http://localhost:5000/toyByCategory/${activeTab}`)
+        .then((res) => res.json())
+        .then((result) => {
+            setCategory(result);
+            console.log(category);
+        });
+    }, [activeTab]);
 
     const handleTabClick = (tabName) => {
       setActiveTab(tabName);
-      console.log(activeTab);
+    //   console.log(activeTab);
     };
 
     return (
