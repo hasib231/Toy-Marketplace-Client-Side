@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
-import { FaUserCircle } from "react-icons/fa";
+
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
-
+  
   const handleLogOut = () => {
     logOut()
       .then()
@@ -23,14 +23,14 @@ const Navbar = () => {
       <li>
         <Link to="/allToys">All Toys</Link>
       </li>
+      <li>
+        <Link to="/myToys">My Toys</Link>
+      </li>
+      <li>
+        <Link to="/addToys">Add A Toy</Link>
+      </li>
       {user ? (
         <>
-          <li>
-            <Link to="/myToys">My Toys</Link>
-          </li>
-          <li>
-            <Link to="/addToys">Add A Toy</Link>
-          </li>
           <li>
             <button onClick={handleLogOut}>Log Out</button>
           </li>
@@ -76,9 +76,12 @@ const Navbar = () => {
       </div>
       <div className="navbar-end">
         {user && (
-          <FaUserCircle
-            style={{ fontSize: "2rem"}}
-          ></FaUserCircle>
+          <div
+            className="w-10 rounded-full tooltip tooltip-left"
+            data-tip={user.displayName}
+          >
+            <img className="w-10 rounded-full" src={user.photoURL} />
+          </div>
         )}
       </div>
     </div>

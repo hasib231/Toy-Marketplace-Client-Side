@@ -1,11 +1,13 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { getAuth, updateProfile } from "firebase/auth";
 import { AuthContext } from "../../../../providers/AuthProvider";
 
 
 const SignUp = () => {
     const { createUser } = useContext(AuthContext);
-    const [error, setError] = useState("");
+  const [error, setError] = useState("");
+  const auth = getAuth();
   const handleSignUp = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -19,20 +21,20 @@ const SignUp = () => {
         .then((result) => {
           const createdUser = result.user;
           console.log(createdUser);
-          updateUserData(createUser, name, photo);
+          updateUserData( name, photo);
         })
         .catch((error) => {
           console.log(error);
           setError(error.message);
         });
       
-     const updateUserData = (user, name, photo) => {
-       user.updateProfile({
+     const updateUserData = ( name, photo) => {
+       updateProfile(auth.currentUser, {
          displayName: name,
          photoURL: photo,
        })
          .then(() => {
-           console.log(user);
+          //  console.log(user);
          })
          .catch((error) => {
            setError(error.massage);
