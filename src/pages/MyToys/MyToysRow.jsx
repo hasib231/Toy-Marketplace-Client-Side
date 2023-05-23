@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const MyToysRow = ({ myToy, handleDelete, handleUpdate }) => {
+const MyToysRow = ({ myToy, handleDelete,key }) => {
   const {
     _id,
     sellerName,
@@ -12,9 +12,44 @@ const MyToysRow = ({ myToy, handleDelete, handleUpdate }) => {
     rating,
     quantity,
     description,
-  } = myToy;
+    } = myToy;
+    
+    // const [updateData, setUpdateData] = useState([]);
+    
+    const handleUpdateToyData = event => {
+        event.preventDefault();
+        const form = event.target;
+        const updatePrice = form.price.value;
+        const updateQuantity = form.quantity.value;
+        const updateDescription = form.description.value;
+        const  updateToyData  = {
+          updatePrice,
+          updateQuantity,
+          updateDescription,
+        };
+
+        fetch(`http://localhost:5000/myToys/${_id}`, {
+          method: "PATCH",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(updateToyData),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            if (data.modifiedCount > 0) {
+              
+              
+            }
+          });
+        
+    }
+   
+
   return (
-    <tr>
+      <tr>
+          <th>{ _id}</th>
       <th>
         <div className="avatar">
           <div className="rounded w-24 h-16">
@@ -30,11 +65,7 @@ const MyToysRow = ({ myToy, handleDelete, handleUpdate }) => {
       <th>{quantity}</th>
       <th>{rating}</th>
       <th>
-        <label
-          htmlFor="my-modal"
-          onClick={() => handleUpdate(_id)}
-          className="btn my-btn"
-        >
+        <label htmlFor="my-modal" className="btn my-btn">
           update
         </label>
       </th>
@@ -44,19 +75,78 @@ const MyToysRow = ({ myToy, handleDelete, handleUpdate }) => {
         </button>
       </th>
 
+      {/* modal */}
       <input type="checkbox" id="my-modal" className="modal-toggle" />
       <div className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">
-            Congratulations random Internet user!
-          </h3>
-          <p className="py-4">
-            You've been selected for a chance to get one year of subscription to
-            use Wikipedia for free!
-          </p>
+          <h3 className="font-bold text-lg">Update toy data</h3>
+
+          {/* from start */}
+          <form onSubmit={handleUpdateToyData}>
+            <div className="">
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Price</span>
+                </label>
+                <input
+                  type="number"
+                  step="0.01"
+                  name="price"
+                  defaultValue=""
+                  placeholder="price"
+                  className="input input-bordered"
+                />
+              </div>
+
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Available quantity</span>
+                </label>
+                <input
+                  type="number"
+                  name="quantity"
+                  defaultValue=""
+                  placeholder="available quantity"
+                  className="input input-bordered"
+                />
+              </div>
+            </div>
+
+            <div className="form-control mt-5">
+              <label className="label">
+                <span className="label-text">Toy description</span>
+              </label>
+              <textarea
+                name="description"
+                className="textarea textarea-bordered"
+                placeholder="Write the toy description"
+              ></textarea>
+            </div>
+
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">id</span>
+              </label>
+              <input
+                type="text"
+                defaultValue={_id}
+                name="id"
+                className="input input-bordered"
+              />
+            </div>
+
+            <div className="form-control mt-8 mb-16">
+              <input
+                className="btn btn-primary btn-block my-btn"
+                type="submit"
+                value="Confirm Update"
+              />
+            </div>
+          </form>
+          {/* from end */}
           <div className="modal-action">
-            <label htmlFor="my-modal" className="btn">
-              Yay!
+            <label htmlFor="my-modal" className="btn my-btn">
+              Close
             </label>
           </div>
         </div>

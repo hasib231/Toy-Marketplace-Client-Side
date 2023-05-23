@@ -21,7 +21,7 @@ const MyToys = () => {
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log(data);
+            // console.log(data);
             if (data.deletedCount > 0) {
               alert("deleted successful");
               const remaining = myToys.filter(
@@ -33,11 +33,7 @@ const MyToys = () => {
       }
     };
 
-    const handleUpdate = (id) => {
-        
-         
-        
-    }
+    
 
   return (
     <div>
@@ -65,7 +61,6 @@ const MyToys = () => {
                 key={myToy._id}
                 myToy={myToy}
                 handleDelete={handleDelete}
-                handleUpdate={handleUpdate}
               ></MyToysRow>
             ))}
           </tbody>
