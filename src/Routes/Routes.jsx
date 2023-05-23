@@ -30,7 +30,7 @@ const router = createBrowserRouter([
       },
       {
         path: "blogs",
-        element: <Blog></Blog>
+        element: <Blog></Blog>,
       },
       {
         path: "addToys",
@@ -60,7 +60,9 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/allToys/${params.id}`),
+          fetch(
+            `https://toy-marketplace-server-hasib231.vercel.app//allToys/${params.id}`
+          ),
       },
     ],
   },

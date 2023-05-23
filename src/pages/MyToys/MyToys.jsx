@@ -7,7 +7,7 @@ const MyToys = () => {
     const [myToys, setMyToys] = useState([]);
     const [control, setControl] = useState(false);
 
-    const url = `http://localhost:5000/myToys?email=${user?.email}`;
+    const url = `https://toy-marketplace-server-hasib231.vercel.app/myToys?email=${user?.email}`;
     useEffect(() => {
       fetch(url)
         .then((res) => res.json())
@@ -17,17 +17,18 @@ const MyToys = () => {
     const handleDelete = (id) => {
       const proceed = confirm("Are you sure you want to delete it?");
       if (proceed) {
-        fetch(`http://localhost:5000/myToys/${id}`, {
-          method: "DELETE",
-        })
+        fetch(
+          `https://toy-marketplace-server-hasib231.vercel.app/myToys/${id}`,
+          {
+            method: "DELETE",
+          }
+        )
           .then((res) => res.json())
           .then((data) => {
             // console.log(data);
             if (data.deletedCount > 0) {
               alert("deleted successful");
-              const remaining = myToys.filter(
-                (myToy) => myToy._id !== id
-              );
+              const remaining = myToys.filter((myToy) => myToy._id !== id);
               setMyToys(remaining);
             }
           });

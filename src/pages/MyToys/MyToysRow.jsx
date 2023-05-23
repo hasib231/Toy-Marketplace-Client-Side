@@ -30,7 +30,7 @@ const MyToysRow = ({ myToy, handleDelete, setControl, control }) => {
     console.log(updateToyData);
     console.log(_id);
 
-    fetch(`http://localhost:5000/myToys/${_id}`, {
+    fetch(`https://toy-marketplace-server-hasib231.vercel.app/myToys/${_id}`, {
       method: "PATCH",
       headers: {
         "content-type": "application/json",
