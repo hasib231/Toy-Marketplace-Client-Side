@@ -21,7 +21,7 @@ const SingleCategory = ({ toyCategory }) => {
           <img className="h-96" src={photoUrl} alt="Shoes" />
         </div>
       </figure>
-      <div className="card-body">
+      <div className="card-body my-card rounded-b-lg">
         <h2 className="card-title">{toyName}</h2>
         <p className="text-xl">${price}</p>
         <p className="text-lg">Rating: {rating}</p>
