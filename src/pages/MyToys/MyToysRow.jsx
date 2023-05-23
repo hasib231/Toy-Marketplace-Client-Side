@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const MyToysRow = ({ myToy, handleDelete,key }) => {
+const MyToysRow = ({ myToy, handleDelete }) => {
   const {
     _id,
     sellerName,
@@ -16,7 +16,7 @@ const MyToysRow = ({ myToy, handleDelete,key }) => {
     
     // const [updateData, setUpdateData] = useState([]);
     
-    const handleUpdateToyData = event => {
+    const handleUpdateToyData = (event) => {
         event.preventDefault();
         const form = event.target;
         const updatePrice = form.price.value;
@@ -27,6 +27,8 @@ const MyToysRow = ({ myToy, handleDelete,key }) => {
           updateQuantity,
           updateDescription,
         };
+        console.log(updateToyData);
+        console.log(_id);
 
         fetch(`http://localhost:5000/myToys/${_id}`, {
           method: "PATCH",
@@ -49,7 +51,6 @@ const MyToysRow = ({ myToy, handleDelete,key }) => {
 
   return (
       <tr>
-          <th>{ _id}</th>
       <th>
         <div className="avatar">
           <div className="rounded w-24 h-16">
@@ -65,7 +66,7 @@ const MyToysRow = ({ myToy, handleDelete,key }) => {
       <th>{quantity}</th>
       <th>{rating}</th>
       <th>
-        <label htmlFor="my-modal" className="btn my-btn">
+        <label htmlFor={_id} className="btn my-btn">
           update
         </label>
       </th>
@@ -76,7 +77,7 @@ const MyToysRow = ({ myToy, handleDelete,key }) => {
       </th>
 
       {/* modal */}
-      <input type="checkbox" id="my-modal" className="modal-toggle" />
+      <input type="checkbox" id={_id} className="modal-toggle" />
       <div className="modal">
         <div className="modal-box">
           <h3 className="font-bold text-lg">Update toy data</h3>
@@ -123,18 +124,6 @@ const MyToysRow = ({ myToy, handleDelete,key }) => {
               ></textarea>
             </div>
 
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">id</span>
-              </label>
-              <input
-                type="text"
-                defaultValue={_id}
-                name="id"
-                className="input input-bordered"
-              />
-            </div>
-
             <div className="form-control mt-8 mb-16">
               <input
                 className="btn btn-primary btn-block my-btn"
@@ -145,7 +134,7 @@ const MyToysRow = ({ myToy, handleDelete,key }) => {
           </form>
           {/* from end */}
           <div className="modal-action">
-            <label htmlFor="my-modal" className="btn my-btn">
+            <label htmlFor={_id} className="btn my-btn">
               Close
             </label>
           </div>
