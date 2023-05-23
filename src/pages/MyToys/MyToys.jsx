@@ -5,13 +5,14 @@ import MyToysRow from "./MyToysRow";
 const MyToys = () => {
     const { user } = useContext(AuthContext);
     const [myToys, setMyToys] = useState([]);
+    const [control, setControl] = useState(false);
 
     const url = `http://localhost:5000/myToys?email=${user?.email}`;
     useEffect(() => {
       fetch(url)
         .then((res) => res.json())
         .then((data) => setMyToys(data));
-    }, [url]);
+    }, [url, control]);
 
     const handleDelete = (id) => {
       const proceed = confirm("Are you sure you want to delete it?");
@@ -61,13 +62,13 @@ const MyToys = () => {
                 key={myToy._id}
                 myToy={myToy}
                 handleDelete={handleDelete}
+                setControl={setControl}
+                control={control}
               ></MyToysRow>
             ))}
           </tbody>
         </table>
       </div>
-
-      
     </div>
   );
 };

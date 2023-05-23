@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const MyToysRow = ({ myToy, handleDelete }) => {
+const MyToysRow = ({ myToy, handleDelete, setControl, control }) => {
   const {
     _id,
     sellerName,
@@ -12,45 +12,42 @@ const MyToysRow = ({ myToy, handleDelete }) => {
     rating,
     quantity,
     description,
-    } = myToy;
-    
-    // const [updateData, setUpdateData] = useState([]);
-    
-    const handleUpdateToyData = (event) => {
-        event.preventDefault();
-        const form = event.target;
-        const updatePrice = form.price.value;
-        const updateQuantity = form.quantity.value;
-        const updateDescription = form.description.value;
-        const  updateToyData  = {
-          updatePrice,
-          updateQuantity,
-          updateDescription,
-        };
-        console.log(updateToyData);
-        console.log(_id);
+  } = myToy;
 
-        fetch(`http://localhost:5000/myToys/${_id}`, {
-          method: "PATCH",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(updateToyData),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-            if (data.modifiedCount > 0) {
-              
-              
-            }
-          });
-        
-    }
-   
+  // const [updateData, setUpdateData] = useState([]);
+
+  const handleUpdateToyData = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const updatePrice = form.price.value;
+    const updateQuantity = form.quantity.value;
+    const updateDescription = form.description.value;
+    const updateToyData = {
+      updatePrice,
+      updateQuantity,
+      updateDescription,
+    };
+    console.log(updateToyData);
+    console.log(_id);
+
+    fetch(`http://localhost:5000/myToys/${_id}`, {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(updateToyData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.modifiedCount > 0) {
+          setControl(!control);
+        }
+      });
+  };
 
   return (
-      <tr>
+    <tr>
       <th>
         <div className="avatar">
           <div className="rounded w-24 h-16">
