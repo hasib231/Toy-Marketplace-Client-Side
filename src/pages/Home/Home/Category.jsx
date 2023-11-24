@@ -22,14 +22,11 @@ const Category = () => {
 
   return (
     <div>
-          <div className="hero mt-12">
-              
+      <div className="hero mt-12">
         <div className="hero-content text-center">
           <div className="max-w-md">
             <h1 className="text-5xl font-bold my-text">Browse toys</h1>
-            <p className="py-6">
-              Find the toy by category wise
-            </p>
+            <p className="py-6">Find the toy by category wise</p>
           </div>
         </div>
       </div>

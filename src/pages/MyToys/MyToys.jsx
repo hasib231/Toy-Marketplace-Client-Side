@@ -3,39 +3,34 @@ import { AuthContext } from "../../providers/AuthProvider";
 import MyToysRow from "./MyToysRow";
 
 const MyToys = () => {
-    const { user } = useContext(AuthContext);
-    const [myToys, setMyToys] = useState([]);
-    const [control, setControl] = useState(false);
+  const { user } = useContext(AuthContext);
+  const [myToys, setMyToys] = useState([]);
+  const [control, setControl] = useState(false);
 
-    const url = `https://toy-marketplace-server-hasib231.vercel.app/myToys?email=${user?.email}`;
-    useEffect(() => {
-      fetch(url)
+  const url = `https://toy-marketplace-server-hasib231.vercel.app/myToys?email=${user?.email}`;
+  useEffect(() => {
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => setMyToys(data));
+  }, [url, control]);
+
+  const handleDelete = (id) => {
+    const proceed = confirm("Are you sure you want to delete it?");
+    if (proceed) {
+      fetch(`https://toy-marketplace-server-hasib231.vercel.app/myToys/${id}`, {
+        method: "DELETE",
+      })
         .then((res) => res.json())
-        .then((data) => setMyToys(data));
-    }, [url, control]);
-
-    const handleDelete = (id) => {
-      const proceed = confirm("Are you sure you want to delete it?");
-      if (proceed) {
-        fetch(
-          `https://toy-marketplace-server-hasib231.vercel.app/myToys/${id}`,
-          {
-            method: "DELETE",
+        .then((data) => {
+          // console.log(data);
+          if (data.deletedCount > 0) {
+            alert("deleted successful");
+            const remaining = myToys.filter((myToy) => myToy._id !== id);
+            setMyToys(remaining);
           }
-        )
-          .then((res) => res.json())
-          .then((data) => {
-            // console.log(data);
-            if (data.deletedCount > 0) {
-              alert("deleted successful");
-              const remaining = myToys.filter((myToy) => myToy._id !== id);
-              setMyToys(remaining);
-            }
-          });
-      }
-    };
-
-    
+        });
+    }
+  };
 
   return (
     <div>

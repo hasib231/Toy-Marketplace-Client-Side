@@ -61,7 +61,7 @@ const router = createBrowserRouter([
         ),
         loader: ({ params }) =>
           fetch(
-            `https://toy-marketplace-server-hasib231.vercel.app//allToys/${params.id}`
+            `https://toy-marketplace-server-hasib231.vercel.app/allToys/${params.id}`
           ),
       },
     ],
